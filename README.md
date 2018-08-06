@@ -19,6 +19,6 @@ docker build -t YOURIMG:TAG .
 
 4、use grafana to show the data:
 
-![1533524431052](C:\Users\69498\AppData\Local\Temp\1533524431052.png)
+![grafana](img/grafana.png)
 
  
