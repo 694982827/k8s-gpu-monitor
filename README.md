@@ -21,4 +21,5 @@ docker build -t YOURIMG:TAG .
 
 ![grafana](img/grafana.png)
 
- 
+
+![influxdb](img/influxdb.png) 
