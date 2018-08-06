@@ -9,9 +9,7 @@ This project could monitor the used of gpu in k8s cluster on node level and pod 
 * k8s-nvidia-plugin
 * influxdb database
 
-2、edit the file [gpu.py](https://github.com/694982827/k8s-gpu-monitor/blob/master/gpu.p
-
-replace the` posturl` with your influxdb file.
+2、edit the file `gpu.py` and replace the` posturl` with your influxdb file.
 
 3、build  your img
 
@@ -19,6 +17,8 @@ replace the` posturl` with your influxdb file.
 docker build -t YOURIMG:TAG .
 ```
 
+4、use grafana to show the data:
 
+![1533524431052](C:\Users\69498\AppData\Local\Temp\1533524431052.png)
 
  
