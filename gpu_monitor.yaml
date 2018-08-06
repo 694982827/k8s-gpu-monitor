@@ -1,0 +1,44 @@
+apiVersion: extensions/v1beta1
+kind: DaemonSet
+metadata:
+  name: gpu-monitor
+  namespace: kube-system
+spec:
+  template:
+    metadata:
+      labels:
+        name: gpu-pod-node-monitor-label
+    spec:
+      hostPID: true
+      hostIPC: true
+      tolerations:
+      # Allow this pod to be rescheduled while the node is in "critical add-ons only" mode.
+      # This, along with the annotation above marks this pod as a critical add-on.
+      - key: CriticalAddonsOnly
+        operator: Exists
+      nodeSelector:
+        GPU: "true"
+      containers:
+      - image: hub.hoc.ccshu.net/dev/gpu_monitor:7
+        name: gpu-monitor
+        volumeMounts:
+        - mountPath: /var/run/docker.sock
+          name: sock
+        - mountPath: /usr/bin/docker
+          name: bin
+        env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: INFLUXDB_URL
+          value: "http://monitoring-influxdb.kube-system:8086/write?db=k8s"
+        - name: NVIDIA_VISIBLE_DEVICES
+          value: "all"
+      volumes: 
+      - name: sock
+        hostPath:
+          path: /var/run/docker.sock
+      - name: bin
+        hostPath: 
+          path: /usr/bin/docker
